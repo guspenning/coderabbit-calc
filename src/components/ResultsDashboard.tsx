@@ -4,7 +4,145 @@ import type { CalcInputs, CalcResults } from "../hooks/useCalculator";
 import { formatCurrency, formatMultiple, formatNumber, formatHours } from "../utils/formatters";
 import { SavingsChart } from "./SavingsChart";
 import { ShareButton } from "./ShareButton";
-import { TrendingUp, Clock, Bug, DollarSign } from "lucide-react";
+import { TrendingUp, Clock, Bug, DollarSign, BarChart2, ExternalLink } from "lucide-react";
+
+interface BenchmarkRowProps {
+  label: string;
+  value: string;
+  accent?: string;
+}
+
+/**
+ * A single metric row inside the benchmark panel.
+ */
+function BenchmarkRow({ label, value, accent = "var(--cr-orange)" }: BenchmarkRowProps) {
+  return (
+    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "6px 0" }}>
+      <span style={{ fontSize: "12px", color: "var(--cr-text-muted)" }}>{label}</span>
+      <span style={{
+        fontFamily: "'JetBrains Mono', monospace",
+        fontSize: "13px",
+        fontWeight: 700,
+        color: accent,
+      }}>{value}</span>
+    </div>
+  );
+}
+
+/**
+ * Returns a contextual "how does your team compare?" message and colour
+ * based on the number of developer seats.
+ */
+function getTeamComparisonNote(devSeats: number): { note: string; color: string } {
+  if (devSeats <= 15) {
+    return {
+      note: "Small teams like yours often spend 25-30% of dev time on reviews — above the industry median of 20%. CodeRabbit typically delivers its highest proportional ROI lift here by eliminating repetitive nit feedback.",
+      color: "var(--cr-orange)",
+    };
+  }
+  if (devSeats <= 100) {
+    return {
+      note: "Teams your size (16-100 devs) sit in the sweet spot for CodeRabbit ROI. Industry data shows a 25-35% review-time reduction at this scale, closely matching the benchmark's 53.5% recall rate on real-world PRs.",
+      color: "#60a5fa",
+    };
+  }
+  if (devSeats <= 300) {
+    return {
+      note: "At 100-300 devs, review bottlenecks compound fast. Enterprise teams at this scale report 40%+ reductions in critical bug escapes and measurable improvements in PR cycle time — consistent with CodeRabbit's #1 F1 ranking.",
+      color: "var(--cr-green)",
+    };
+  }
+  return {
+    note: "Large organisations (300+ devs) benefit most from consistent, policy-aware reviews across many teams. CodeRabbit's precision of ~49% means roughly 1-in-2 comments drives an actual code change — signal, not noise.",
+    color: "var(--cr-green)",
+  };
+}
+
+interface IndustryBenchmarksProps {
+  devSeats: number;
+}
+
+/**
+ * Panel showing headline stats from the Martian Code Review Bench
+ * (Jan–Feb 2026, ~300k PRs, 10 tools) plus a contextual note about
+ * how the user's team size stacks up against industry patterns.
+ */
+function IndustryBenchmarks({ devSeats }: IndustryBenchmarksProps) {
+  const { note, color } = getTeamComparisonNote(devSeats);
+
+  return (
+    <div style={{
+      background: "rgba(17, 17, 28, 0.6)",
+      backdropFilter: "blur(10px)",
+      border: "1px solid rgba(255, 255, 255, 0.05)",
+      borderRadius: "12px",
+      padding: "18px 20px",
+      boxShadow: "inset 0 1px 0 rgba(255,255,255,0.03)",
+    }}>
+      {/* Section header */}
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "14px" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+          <BarChart2 size={14} style={{ color: "var(--cr-orange)" }} />
+          <span style={{
+            fontFamily: "'Inter', sans-serif",
+            fontSize: "10px",
+            fontWeight: 700,
+            letterSpacing: "0.14em",
+            textTransform: "uppercase",
+            color: "var(--cr-text-muted)",
+          }}>
+            Industry Benchmarks
+          </span>
+        </div>
+        <a
+          href="https://www.coderabbit.ai/blog/coderabbit-tops-martian-code-review-benchmark"
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: "4px",
+            fontSize: "10px",
+            color: "var(--cr-text-dim)",
+            textDecoration: "none",
+          }}
+          onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = "var(--cr-orange)"; }}
+          onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = "var(--cr-text-dim)"; }}
+        >
+          Martian Bench <ExternalLink size={10} />
+        </a>
+      </div>
+
+      {/* Benchmark metrics */}
+      <div style={{
+        borderBottom: "1px solid rgba(255,255,255,0.05)",
+        marginBottom: "14px",
+        paddingBottom: "10px",
+      }}>
+        <BenchmarkRow label="Overall ranking (10 tools evaluated)" value="#1" accent="var(--cr-orange)" />
+        <BenchmarkRow label="F1 Score" value="51.2%" accent="var(--cr-orange)" />
+        <BenchmarkRow label="Recall (comment acceptance)" value="53.5%" accent="var(--cr-green)" />
+        <BenchmarkRow label="Precision (changes per comment)" value="~1 in 2" accent="var(--cr-green)" />
+        <BenchmarkRow label="PRs analysed (Jan–Feb 2026)" value="~300k" accent="var(--cr-text-muted)" />
+      </div>
+
+      {/* Dynamic team comparison note */}
+      <div style={{
+        background: `linear-gradient(135deg, ${color}0a 0%, transparent 100%)`,
+        border: `1px solid ${color}22`,
+        borderRadius: "8px",
+        padding: "10px 12px",
+      }}>
+        <div style={{ fontSize: "10px", fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase", color, marginBottom: "6px" }}>
+          How does your team compare?
+        </div>
+        <p style={{ fontSize: "11px", color: "var(--cr-text-muted)", margin: 0, lineHeight: 1.6 }}>
+          {note}
+        </p>
+      </div>
+    </div>
+  );
+}
 
 interface ResultsDashboardProps {
   inputs: CalcInputs;
@@ -246,6 +384,9 @@ export function ResultsDashboard({ inputs, results }: ResultsDashboardProps) {
           accent="var(--cr-green)"
         />
       </div>
+
+      {/* Industry benchmarks + team comparison */}
+      <IndustryBenchmarks devSeats={inputs.devSeats} />
 
       {/* Share button */}
       <ShareButton inputs={inputs} results={results} />
