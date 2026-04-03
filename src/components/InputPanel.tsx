@@ -17,16 +17,20 @@ const cardStyle: React.CSSProperties = {
   marginBottom: "16px",
 };
 
+/** Section title with left orange accent bar */
 const sectionTitleStyle: React.CSSProperties = {
-  fontFamily: "'Syne', sans-serif",
+  fontFamily: "'Inter', sans-serif",
   fontSize: "11px",
   fontWeight: 700,
   letterSpacing: "0.12em",
   textTransform: "uppercase" as const,
-  color: "var(--cr-purple-light)",
+  color: "var(--cr-orange)",
   marginBottom: "16px",
+  paddingLeft: "12px",
+  borderLeft: "3px solid var(--cr-orange)",
 };
 
+/** Label row styling */
 const labelStyle: React.CSSProperties = {
   fontSize: "13px",
   color: "var(--cr-text-muted)",
@@ -36,6 +40,7 @@ const labelStyle: React.CSSProperties = {
   marginBottom: "6px",
 };
 
+/** Base input field styling */
 const inputBaseStyle: React.CSSProperties = {
   background: "var(--cr-bg-elevated)",
   border: "1px solid var(--cr-border)",
@@ -70,7 +75,7 @@ function SliderInput({
 }: SliderInputProps) {
   const pct = ((value - min) / (max - min)) * 100;
   const trackStyle: React.CSSProperties = {
-    background: `linear-gradient(to right, var(--cr-purple) ${pct}%, var(--cr-bg-elevated) ${pct}%)`,
+    background: `linear-gradient(to right, var(--cr-orange) ${pct}%, var(--cr-bg-elevated) ${pct}%)`,
   };
 
   return (
@@ -97,7 +102,7 @@ function SliderInput({
             if (!isNaN(v)) onChange(v);
           }}
           style={{ ...inputBaseStyle, width: "90px", textAlign: "right", flexShrink: 0 }}
-          onFocus={(e) => e.target.style.borderColor = "var(--cr-purple)"}
+          onFocus={(e) => e.target.style.borderColor = "var(--cr-orange)"}
           onBlur={(e) => e.target.style.borderColor = "var(--cr-border)"}
         />
       </div>
@@ -152,7 +157,7 @@ function NumberInput({
             paddingLeft: prefix ? "24px" : "12px",
             paddingRight: suffix ? "30px" : "12px",
           }}
-          onFocus={(e) => e.target.style.borderColor = "var(--cr-purple)"}
+          onFocus={(e) => e.target.style.borderColor = "var(--cr-orange)"}
           onBlur={(e) => e.target.style.borderColor = "var(--cr-border)"}
         />
         {suffix && (
@@ -181,7 +186,7 @@ export function InputPanel({ inputs, onUpdate, onReset }: InputPanelProps) {
       {/* Header */}
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "20px" }}>
         <h2 style={{
-          fontFamily: "'Syne', sans-serif",
+          fontFamily: "'Inter', sans-serif",
           fontSize: "18px",
           fontWeight: 700,
           color: "var(--cr-text)",
@@ -206,7 +211,7 @@ export function InputPanel({ inputs, onUpdate, onReset }: InputPanelProps) {
             fontFamily: "'Inter', sans-serif",
           }}
           onMouseEnter={(e) => {
-            (e.target as HTMLElement).style.borderColor = "var(--cr-purple)";
+            (e.target as HTMLElement).style.borderColor = "var(--cr-orange)";
             (e.target as HTMLElement).style.color = "var(--cr-text)";
           }}
           onMouseLeave={(e) => {
@@ -281,7 +286,7 @@ export function InputPanel({ inputs, onUpdate, onReset }: InputPanelProps) {
           onChange={(v) => onUpdate("reviewTimeFraction", v)}
           format={pctFormat}
           parse={pctParse}
-          tooltip="Industry average is 15–25% — this includes reviewing others' PRs and addressing review feedback on your own PRs."
+          tooltip="Industry average is 15-25% - this includes reviewing others' PRs and addressing review feedback on your own PRs."
         />
 
         <SliderInput
@@ -310,7 +315,7 @@ export function InputPanel({ inputs, onUpdate, onReset }: InputPanelProps) {
           onChange={(v) => onUpdate("bugsPerDevPerWeek", v)}
           format={(v) => v.toFixed(1)}
           parse={(s) => parseFloat(s)}
-          tooltip="Includes all bugs that make it past the author — not just critical ones."
+          tooltip="Includes all bugs that make it past the author - not just critical ones."
         />
 
         <SliderInput
@@ -342,7 +347,7 @@ export function InputPanel({ inputs, onUpdate, onReset }: InputPanelProps) {
           step={100}
           prefix="$"
           onChange={(v) => onUpdate("bugCostPreQA", v)}
-          tooltip="Cost to fix a bug caught in code review — typically 5–10x cheaper than production."
+          tooltip="Cost to fix a bug caught in code review - typically 5-10x cheaper than production."
         />
 
         <SliderInput
@@ -354,7 +359,7 @@ export function InputPanel({ inputs, onUpdate, onReset }: InputPanelProps) {
           onChange={(v) => onUpdate("bugCatchFraction", v)}
           format={pctFormat}
           parse={pctParse}
-          tooltip="Conservative estimate: CodeRabbit typically catches 40–60% of common bug patterns before human review."
+          tooltip="Conservative estimate: CodeRabbit typically catches 40-60% of common bug patterns before human review."
         />
       </div>
     </div>

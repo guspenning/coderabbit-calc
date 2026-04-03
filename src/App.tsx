@@ -2,6 +2,7 @@ import "./index.css";
 import { useCalculator } from "./hooks/useCalculator";
 import { InputPanel } from "./components/InputPanel";
 import { ResultsDashboard } from "./components/ResultsDashboard";
+import { CodeRabbitLogo } from "./components/CodeRabbitLogo";
 
 /**
  * Root application component for CodeRabbit Calc.
@@ -23,7 +24,7 @@ function App() {
         <header style={{
           padding: "28px 0 24px",
           borderBottom: "1px solid var(--cr-border)",
-          marginBottom: "32px",
+          marginBottom: "12px",
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
@@ -32,38 +33,16 @@ function App() {
         }}>
           <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
             {/* Logo wordmark */}
-            <div style={{
-              display: "flex",
-              alignItems: "center",
-              gap: "10px",
-            }}>
-              {/* Rabbit icon SVG */}
-              <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect width="32" height="32" rx="8" fill="#7C3AED" fillOpacity="0.15" />
-                <path d="M10 8 C10 5, 8 4, 8 6 L8 11 C6 12, 5 14, 5 16 C5 21, 9 25, 16 25 C23 25, 27 21, 27 16 C27 14, 26 12, 24 11 L24 6 C24 4, 22 5, 22 8 L22 10 C20.5 9, 18.5 8.5, 16 8.5 C13.5 8.5, 11.5 9, 10 10 Z" fill="#7C3AED" fillOpacity="0.8"/>
-                <circle cx="12" cy="17" r="1.5" fill="#E8E4F0"/>
-                <circle cx="20" cy="17" r="1.5" fill="#E8E4F0"/>
-                <path d="M13 21 C14 22.5, 18 22.5, 19 21" stroke="#E8E4F0" strokeWidth="1.2" strokeLinecap="round" fill="none"/>
-              </svg>
-              <span style={{
-                fontFamily: "'Syne', sans-serif",
-                fontSize: "22px",
-                fontWeight: 800,
-                color: "var(--cr-purple-light)",
-                letterSpacing: "-0.02em",
-              }}>
-                CodeRabbit
-              </span>
-            </div>
+            <CodeRabbitLogo size={36} variant="dark" showWordmark={true} />
             <div style={{
               width: "1px",
               height: "24px",
-              background: "var(--cr-border)",
+              background: "var(--cr-border-bright)",
             }} />
             <span style={{
               fontFamily: "'Inter', sans-serif",
               fontSize: "15px",
-              fontWeight: 400,
+              fontWeight: 500,
               color: "var(--cr-text-muted)",
               letterSpacing: "0.01em",
             }}>
@@ -72,13 +51,43 @@ function App() {
           </div>
 
           <div style={{
-            fontSize: "12px",
-            color: "var(--cr-text-dim)",
-            fontFamily: "'Inter', sans-serif",
+            display: "flex",
+            alignItems: "center",
+            gap: "8px",
           }}>
-            Real-time estimates · No form submission required
+            <span style={{
+              fontSize: "11px",
+              fontWeight: 600,
+              letterSpacing: "0.06em",
+              textTransform: "uppercase" as const,
+              color: "var(--cr-orange)",
+              background: "rgba(255, 107, 44, 0.1)",
+              border: "1px solid rgba(255, 107, 44, 0.2)",
+              borderRadius: "6px",
+              padding: "4px 10px",
+              fontFamily: "'Inter', sans-serif",
+            }}>
+              For Sales Teams
+            </span>
           </div>
         </header>
+
+        {/* Hero tagline */}
+        <div style={{
+          marginBottom: "32px",
+          paddingTop: "4px",
+        }}>
+          <p style={{
+            fontFamily: "'Inter', sans-serif",
+            fontSize: "15px",
+            fontWeight: 400,
+            color: "var(--cr-text-dim)",
+            margin: 0,
+            lineHeight: 1.5,
+          }}>
+            Show your team the measurable impact of AI code review
+          </p>
+        </div>
 
         {/* Two-column layout */}
         <div style={{

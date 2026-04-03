@@ -15,20 +15,27 @@ interface ShareButtonProps {
 export function ShareButton({ inputs, results }: ShareButtonProps) {
   const [copied, setCopied] = useState(false);
 
+  /**
+   * Builds a human-readable ROI summary string for clipboard sharing.
+   * @returns Formatted multi-line text summary
+   */
   const generateSummary = () => {
     const lines = [
       "CodeRabbit ROI Summary",
-      "─────────────────────",
+      "---------------------",
       `Team: ${inputs.devSeats} developer${inputs.devSeats !== 1 ? "s" : ""}`,
       `Annual Savings: ${formatCurrency(results.totalSavings)}`,
-      `  • Dev Time Saved: ${formatCurrency(results.devTimeSavedValue)}`,
-      `  • Early Bug Detection: ${formatCurrency(results.bugsSavedValue)}`,
+      `  - Dev Time Saved: ${formatCurrency(results.devTimeSavedValue)}`,
+      `  - Early Bug Detection: ${formatCurrency(results.bugsSavedValue)}`,
       `CodeRabbit Cost: ${formatCurrency(results.crLicenseCostYear)}/yr`,
       `ROI: ${formatMultiple(results.roiMultiple)} return`,
     ];
     return lines.join("\n");
   };
 
+  /**
+   * Copies the ROI summary to the clipboard and shows confirmation feedback.
+   */
   const handleShare = async () => {
     const summary = generateSummary();
     try {
@@ -60,19 +67,19 @@ export function ShareButton({ inputs, results }: ShareButtonProps) {
         padding: "12px",
         background: copied
           ? "linear-gradient(135deg, var(--cr-green), var(--cr-green-light))"
-          : "linear-gradient(135deg, var(--cr-purple), var(--cr-purple-light))",
+          : "linear-gradient(135deg, var(--cr-orange), var(--cr-orange-light))",
         border: "none",
         borderRadius: "10px",
         color: "#fff",
-        fontFamily: "'Syne', sans-serif",
+        fontFamily: "'Inter', sans-serif",
         fontSize: "14px",
         fontWeight: 700,
         letterSpacing: "0.05em",
         cursor: "pointer",
         transition: "all 0.3s ease",
         boxShadow: copied
-          ? "0 0 20px rgba(16, 185, 129, 0.4)"
-          : "0 0 20px rgba(124, 58, 237, 0.3)",
+          ? "0 0 20px rgba(34, 197, 94, 0.4)"
+          : "0 0 20px rgba(255, 107, 44, 0.3)",
       }}
     >
       {copied ? <Check size={16} /> : <Share2 size={16} />}

@@ -21,13 +21,15 @@ export function SavingsChart({ devTimeSaved, bugsSaved }: SavingsChartProps) {
   return (
     <div>
       <div style={{
-        fontFamily: "'Syne', sans-serif",
+        fontFamily: "'Inter', sans-serif",
         fontSize: "11px",
         fontWeight: 700,
         letterSpacing: "0.12em",
         textTransform: "uppercase",
-        color: "var(--cr-purple-light)",
+        color: "var(--cr-orange)",
         marginBottom: "14px",
+        paddingLeft: "12px",
+        borderLeft: "3px solid var(--cr-orange)",
       }}>
         Savings Breakdown
       </div>
@@ -46,7 +48,7 @@ export function SavingsChart({ devTimeSaved, bugsSaved }: SavingsChartProps) {
           transition={{ duration: 0.6, ease: "easeOut" }}
           style={{
             height: "100%",
-            background: "linear-gradient(90deg, var(--cr-purple), var(--cr-purple-light))",
+            background: "linear-gradient(90deg, var(--cr-orange), var(--cr-orange-light))",
             borderRadius: devPct > 99 ? "6px" : "6px 0 0 6px",
           }}
         />
@@ -64,7 +66,7 @@ export function SavingsChart({ devTimeSaved, bugsSaved }: SavingsChartProps) {
       {/* Legend */}
       <div style={{ display: "flex", gap: "16px", flexWrap: "wrap" }}>
         <LegendItem
-          color="var(--cr-purple)"
+          color="var(--cr-orange)"
           label="Dev Time Saved"
           value={formatCurrency(devTimeSaved)}
           pct={devPct}

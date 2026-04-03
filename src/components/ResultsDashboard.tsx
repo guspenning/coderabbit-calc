@@ -60,7 +60,7 @@ interface StatCardProps {
 /**
  * A secondary stat card in the key metrics row.
  */
-function StatCard({ icon, label, value, accent = "var(--cr-purple)" }: StatCardProps) {
+function StatCard({ icon, label, value, accent = "var(--cr-orange)" }: StatCardProps) {
   return (
     <div style={{
       flex: 1,
@@ -109,7 +109,7 @@ export function ResultsDashboard({ inputs, results }: ResultsDashboardProps) {
       {/* Header */}
       <div style={{ marginBottom: "4px" }}>
         <h2 style={{
-          fontFamily: "'Syne', sans-serif",
+          fontFamily: "'Inter', sans-serif",
           fontSize: "18px",
           fontWeight: 700,
           color: "var(--cr-text)",
@@ -126,7 +126,7 @@ export function ResultsDashboard({ inputs, results }: ResultsDashboardProps) {
         transition={{ duration: 0.5 }}
         className="glow-pulse"
         style={{
-          background: "linear-gradient(135deg, rgba(124, 58, 237, 0.15) 0%, rgba(16, 185, 129, 0.08) 100%)",
+          background: "linear-gradient(135deg, rgba(255, 107, 44, 0.12) 0%, rgba(34, 197, 94, 0.06) 100%)",
           border: "1px solid var(--cr-border-bright)",
           borderRadius: "16px",
           padding: "28px 24px",
@@ -142,7 +142,7 @@ export function ResultsDashboard({ inputs, results }: ResultsDashboardProps) {
           width: "160px",
           height: "160px",
           borderRadius: "50%",
-          background: "radial-gradient(circle, rgba(16, 185, 129, 0.12) 0%, transparent 70%)",
+          background: "radial-gradient(circle, rgba(34, 197, 94, 0.10) 0%, transparent 70%)",
           pointerEvents: "none",
         }} />
 
@@ -153,7 +153,7 @@ export function ResultsDashboard({ inputs, results }: ResultsDashboardProps) {
           fontFamily: "'Syne', sans-serif",
           fontSize: "clamp(36px, 5vw, 52px)",
           fontWeight: 800,
-          color: "var(--cr-green-light)",
+          color: "var(--cr-green)",
           letterSpacing: "-0.02em",
           lineHeight: 1,
           marginBottom: "20px",
@@ -171,17 +171,17 @@ export function ResultsDashboard({ inputs, results }: ResultsDashboardProps) {
               display: "inline-flex",
               alignItems: "center",
               gap: "8px",
-              background: "rgba(124, 58, 237, 0.2)",
+              background: "rgba(255, 107, 44, 0.15)",
               border: "1px solid var(--cr-border-bright)",
               borderRadius: "8px",
               padding: "6px 14px",
             }}>
-              <TrendingUp size={14} style={{ color: "var(--cr-purple-light)" }} />
+              <TrendingUp size={14} style={{ color: "var(--cr-orange)" }} />
               <span style={{
                 fontFamily: "'JetBrains Mono', monospace",
                 fontSize: "22px",
                 fontWeight: 700,
-                color: "var(--cr-purple-light)",
+                color: "var(--cr-orange)",
               }}>
                 {formatMultiple(animatedRoi)}
               </span>
@@ -224,13 +224,13 @@ export function ResultsDashboard({ inputs, results }: ResultsDashboardProps) {
           icon={<Clock size={16} />}
           label="Hours saved per dev per week"
           value={formatHours(animatedHoursSaved)}
-          accent="var(--cr-purple-light)"
+          accent="var(--cr-orange)"
         />
         <StatCard
           icon={<Clock size={16} />}
           label="Total dev hours saved per year"
           value={formatNumber(animatedTotalHours)}
-          accent="var(--cr-purple-light)"
+          accent="var(--cr-orange)"
         />
         <StatCard
           icon={<Bug size={16} />}
