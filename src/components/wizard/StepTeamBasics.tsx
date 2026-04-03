@@ -56,10 +56,11 @@ export function StepTeamBasics({
       <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
         {/* Dev count */}
         <div className="glass-card" style={{ borderRadius: 12, padding: "20px 22px" }}>
-          <label style={labelStyle}>
+          <label htmlFor="wizard-dev-seats" style={labelStyle}>
             How many developers?
           </label>
           <input
+            id="wizard-dev-seats"
             ref={devRef}
             type="number"
             min={1}
@@ -75,10 +76,11 @@ export function StepTeamBasics({
 
         {/* Avg salary */}
         <div className="glass-card" style={{ borderRadius: 12, padding: "20px 22px" }}>
-          <label style={labelStyle}>
+          <label htmlFor="wizard-avg-salary" style={labelStyle}>
             Average developer salary ($/year)
           </label>
           <input
+            id="wizard-avg-salary"
             type="number"
             min={30000}
             max={1000000}
