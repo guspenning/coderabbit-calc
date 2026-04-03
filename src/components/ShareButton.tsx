@@ -58,6 +58,7 @@ export function ShareButton({ inputs, results }: ShareButtonProps) {
   return (
     <button
       onClick={handleShare}
+      className="share-btn"
       style={{
         display: "flex",
         alignItems: "center",

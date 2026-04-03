@@ -36,29 +36,32 @@ export function SavingsChart({ devTimeSaved, bugsSaved }: SavingsChartProps) {
 
       {/* Stacked bar */}
       <div style={{
-        height: "28px",
-        borderRadius: "6px",
+        height: "36px",
+        borderRadius: "8px",
         overflow: "hidden",
         display: "flex",
-        background: "var(--cr-bg-elevated)",
-        marginBottom: "12px",
+        background: "rgba(30, 30, 50, 0.6)",
+        marginBottom: "14px",
+        boxShadow: "inset 0 1px 3px rgba(0,0,0,0.3)",
       }}>
         <motion.div
           animate={{ width: `${devPct}%` }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
+          transition={{ duration: 0.7, ease: "easeOut" }}
           style={{
             height: "100%",
-            background: "linear-gradient(90deg, var(--cr-orange), var(--cr-orange-light))",
-            borderRadius: devPct > 99 ? "6px" : "6px 0 0 6px",
+            background: "linear-gradient(90deg, #E85A1E, #FF8C5A)",
+            borderRadius: devPct > 99 ? "8px" : "8px 0 0 8px",
+            boxShadow: "2px 0 12px rgba(255, 107, 44, 0.3)",
           }}
         />
         <motion.div
           animate={{ width: `${bugPct}%` }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
+          transition={{ duration: 0.7, ease: "easeOut" }}
           style={{
             height: "100%",
-            background: "linear-gradient(90deg, var(--cr-green), var(--cr-green-light))",
-            borderRadius: bugPct > 99 ? "6px" : "0 6px 6px 0",
+            background: "linear-gradient(90deg, #16A34A, #22C55E)",
+            borderRadius: bugPct > 99 ? "8px" : "0 8px 8px 0",
+            boxShadow: "-2px 0 12px rgba(34, 197, 94, 0.2)",
           }}
         />
       </div>
