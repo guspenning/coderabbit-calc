@@ -2,7 +2,6 @@ import "./index.css";
 import { useCalculator } from "./hooks/useCalculator";
 import { InputPanel } from "./components/InputPanel";
 import { ResultsDashboard } from "./components/ResultsDashboard";
-import { CodeRabbitLogo } from "./components/CodeRabbitLogo";
 
 /**
  * Root application component for CodeRabbit Calc.
@@ -32,8 +31,8 @@ function App() {
           gap: "12px",
         }}>
           <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
-            {/* Logo wordmark */}
-            <CodeRabbitLogo size={36} variant="dark" showWordmark={true} />
+            {/* Logo PNG */}
+            <img src="/coderabbit-logo.png" alt="CodeRabbit" style={{ height: 36 }} />
             <div style={{
               width: "1px",
               height: "24px",
