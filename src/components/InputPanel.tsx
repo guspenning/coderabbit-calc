@@ -8,45 +8,56 @@ interface InputPanelProps {
   onReset: () => void;
 }
 
-/** Card container styling */
+/** Card container styling — glass morphism effect */
 const cardStyle: React.CSSProperties = {
-  background: "var(--cr-bg-card)",
-  border: "1px solid var(--cr-border)",
-  borderRadius: "12px",
-  padding: "20px",
-  marginBottom: "16px",
+  background: "rgba(17, 17, 28, 0.6)",
+  backdropFilter: "blur(10px)",
+  WebkitBackdropFilter: "blur(10px)",
+  border: "1px solid rgba(255, 255, 255, 0.05)",
+  borderRadius: "14px",
+  padding: "22px",
+  marginBottom: "14px",
+  boxShadow: "inset 0 1px 0 rgba(255, 255, 255, 0.03), 0 4px 24px rgba(0, 0, 0, 0.2)",
 };
 
+/** Section title with refined left accent */
 const sectionTitleStyle: React.CSSProperties = {
-  fontFamily: "'Syne', sans-serif",
-  fontSize: "11px",
+  fontFamily: "'Inter', sans-serif",
+  fontSize: "10px",
   fontWeight: 700,
-  letterSpacing: "0.12em",
+  letterSpacing: "0.14em",
   textTransform: "uppercase" as const,
-  color: "var(--cr-purple-light)",
-  marginBottom: "16px",
+  color: "var(--cr-text-muted)",
+  marginBottom: "18px",
+  paddingLeft: "12px",
+  borderLeft: "2px solid var(--cr-orange)",
 };
 
+/** Label row styling */
 const labelStyle: React.CSSProperties = {
-  fontSize: "13px",
+  fontSize: "12px",
   color: "var(--cr-text-muted)",
   display: "flex",
   alignItems: "center",
   gap: "5px",
-  marginBottom: "6px",
+  marginBottom: "7px",
+  fontWeight: 500,
+  letterSpacing: "0.01em",
 };
 
+/** Base input field styling — glass effect */
 const inputBaseStyle: React.CSSProperties = {
-  background: "var(--cr-bg-elevated)",
-  border: "1px solid var(--cr-border)",
+  background: "rgba(30, 30, 50, 0.5)",
+  backdropFilter: "blur(8px)",
+  border: "1px solid rgba(255, 255, 255, 0.06)",
   borderRadius: "8px",
   color: "var(--cr-text)",
   fontFamily: "'JetBrains Mono', monospace",
-  fontSize: "14px",
+  fontSize: "13px",
   padding: "8px 12px",
   width: "100%",
   outline: "none",
-  transition: "border-color 0.2s",
+  transition: "all 0.25s ease",
 };
 
 interface SliderInputProps {
@@ -63,6 +74,7 @@ interface SliderInputProps {
 
 /**
  * A combined slider + text input component for numeric input fields.
+ * Features a gradient-filled track and glassmorphism-styled text input.
  * Supports both dragging the slider and typing a value directly.
  */
 function SliderInput({
@@ -70,7 +82,7 @@ function SliderInput({
 }: SliderInputProps) {
   const pct = ((value - min) / (max - min)) * 100;
   const trackStyle: React.CSSProperties = {
-    background: `linear-gradient(to right, var(--cr-purple) ${pct}%, var(--cr-bg-elevated) ${pct}%)`,
+    background: `linear-gradient(to right, var(--cr-orange) ${pct}%, rgba(30, 30, 50, 0.8) ${pct}%)`,
   };
 
   return (
@@ -96,9 +108,16 @@ function SliderInput({
             const v = parse(e.target.value);
             if (!isNaN(v)) onChange(v);
           }}
-          style={{ ...inputBaseStyle, width: "90px", textAlign: "right", flexShrink: 0 }}
-          onFocus={(e) => e.target.style.borderColor = "var(--cr-purple)"}
-          onBlur={(e) => e.target.style.borderColor = "var(--cr-border)"}
+          className="glass-input"
+          style={{ ...inputBaseStyle, width: "88px", textAlign: "right", flexShrink: 0 }}
+          onFocus={(e) => {
+            e.target.style.borderColor = "var(--cr-orange)";
+            e.target.style.boxShadow = "0 0 0 3px rgba(255, 107, 44, 0.1), 0 0 20px rgba(255, 107, 44, 0.1)";
+          }}
+          onBlur={(e) => {
+            e.target.style.borderColor = "rgba(255, 255, 255, 0.06)";
+            e.target.style.boxShadow = "none";
+          }}
         />
       </div>
     </div>
@@ -118,7 +137,8 @@ interface NumberInputProps {
 }
 
 /**
- * A simple styled number input field with optional prefix/suffix display.
+ * A styled number input field with glassmorphism effect.
+ * Supports optional prefix/suffix display and animated focus states.
  */
 function NumberInput({
   label, value, min, max, step = 1, prefix, suffix, onChange, tooltip,
@@ -133,7 +153,7 @@ function NumberInput({
         {prefix && (
           <span style={{
             position: "absolute", left: "12px", top: "50%", transform: "translateY(-50%)",
-            color: "var(--cr-text-muted)", fontFamily: "'JetBrains Mono', monospace", fontSize: "14px",
+            color: "var(--cr-text-dim)", fontFamily: "'JetBrains Mono', monospace", fontSize: "13px",
             pointerEvents: "none",
           }}>{prefix}</span>
         )}
@@ -147,18 +167,25 @@ function NumberInput({
             const v = parseFloat(e.target.value);
             if (!isNaN(v)) onChange(v);
           }}
+          className="glass-input"
           style={{
             ...inputBaseStyle,
             paddingLeft: prefix ? "24px" : "12px",
             paddingRight: suffix ? "30px" : "12px",
           }}
-          onFocus={(e) => e.target.style.borderColor = "var(--cr-purple)"}
-          onBlur={(e) => e.target.style.borderColor = "var(--cr-border)"}
+          onFocus={(e) => {
+            e.target.style.borderColor = "var(--cr-orange)";
+            e.target.style.boxShadow = "0 0 0 3px rgba(255, 107, 44, 0.1), 0 0 20px rgba(255, 107, 44, 0.1)";
+          }}
+          onBlur={(e) => {
+            e.target.style.borderColor = "rgba(255, 255, 255, 0.06)";
+            e.target.style.boxShadow = "none";
+          }}
         />
         {suffix && (
           <span style={{
             position: "absolute", right: "12px", top: "50%", transform: "translateY(-50%)",
-            color: "var(--cr-text-muted)", fontFamily: "'JetBrains Mono', monospace", fontSize: "14px",
+            color: "var(--cr-text-dim)", fontFamily: "'JetBrains Mono', monospace", fontSize: "13px",
             pointerEvents: "none",
           }}>{suffix}</span>
         )}
@@ -171,6 +198,7 @@ function NumberInput({
  * The left-panel input form for the ROI calculator.
  * Grouped into three sections: Team & Cost Info, Code Review Habits, Bug Economics.
  * All changes propagate immediately through the onUpdate callback.
+ * Features glass morphism card styling with refined typography.
  */
 export function InputPanel({ inputs, onUpdate, onReset }: InputPanelProps) {
   const pctFormat = (v: number) => `${Math.round(v * 100)}%`;
@@ -181,11 +209,13 @@ export function InputPanel({ inputs, onUpdate, onReset }: InputPanelProps) {
       {/* Header */}
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "20px" }}>
         <h2 style={{
-          fontFamily: "'Syne', sans-serif",
-          fontSize: "18px",
-          fontWeight: 700,
-          color: "var(--cr-text)",
+          fontFamily: "'Inter', sans-serif",
+          fontSize: "13px",
+          fontWeight: 600,
+          color: "var(--cr-text-muted)",
           margin: 0,
+          letterSpacing: "0.06em",
+          textTransform: "uppercase" as const,
         }}>
           Configure Your Team
         </h2>
@@ -195,27 +225,32 @@ export function InputPanel({ inputs, onUpdate, onReset }: InputPanelProps) {
             display: "flex",
             alignItems: "center",
             gap: "6px",
-            background: "transparent",
-            border: "1px solid var(--cr-border)",
+            background: "rgba(255, 255, 255, 0.03)",
+            border: "1px solid rgba(255, 255, 255, 0.06)",
             borderRadius: "8px",
-            color: "var(--cr-text-muted)",
-            fontSize: "12px",
+            color: "var(--cr-text-dim)",
+            fontSize: "11px",
             padding: "6px 12px",
             cursor: "pointer",
-            transition: "all 0.2s",
+            transition: "all 0.25s ease",
             fontFamily: "'Inter', sans-serif",
+            fontWeight: 500,
           }}
           onMouseEnter={(e) => {
-            (e.target as HTMLElement).style.borderColor = "var(--cr-purple)";
-            (e.target as HTMLElement).style.color = "var(--cr-text)";
+            const el = e.currentTarget;
+            el.style.borderColor = "rgba(255, 107, 44, 0.3)";
+            el.style.color = "var(--cr-text-muted)";
+            el.style.background = "rgba(255, 107, 44, 0.05)";
           }}
           onMouseLeave={(e) => {
-            (e.target as HTMLElement).style.borderColor = "var(--cr-border)";
-            (e.target as HTMLElement).style.color = "var(--cr-text-muted)";
+            const el = e.currentTarget;
+            el.style.borderColor = "rgba(255, 255, 255, 0.06)";
+            el.style.color = "var(--cr-text-dim)";
+            el.style.background = "rgba(255, 255, 255, 0.03)";
           }}
         >
-          <RotateCcw size={12} />
-          Reset to Defaults
+          <RotateCcw size={11} />
+          Reset
         </button>
       </div>
 
@@ -281,7 +316,7 @@ export function InputPanel({ inputs, onUpdate, onReset }: InputPanelProps) {
           onChange={(v) => onUpdate("reviewTimeFraction", v)}
           format={pctFormat}
           parse={pctParse}
-          tooltip="Industry average is 15–25% — this includes reviewing others' PRs and addressing review feedback on your own PRs."
+          tooltip="Industry average is 15-25% - this includes reviewing others' PRs and addressing review feedback on your own PRs."
         />
 
         <SliderInput
@@ -310,7 +345,7 @@ export function InputPanel({ inputs, onUpdate, onReset }: InputPanelProps) {
           onChange={(v) => onUpdate("bugsPerDevPerWeek", v)}
           format={(v) => v.toFixed(1)}
           parse={(s) => parseFloat(s)}
-          tooltip="Includes all bugs that make it past the author — not just critical ones."
+          tooltip="Includes all bugs that make it past the author - not just critical ones."
         />
 
         <SliderInput
@@ -342,7 +377,7 @@ export function InputPanel({ inputs, onUpdate, onReset }: InputPanelProps) {
           step={100}
           prefix="$"
           onChange={(v) => onUpdate("bugCostPreQA", v)}
-          tooltip="Cost to fix a bug caught in code review — typically 5–10x cheaper than production."
+          tooltip="Cost to fix a bug caught in code review - typically 5-10x cheaper than production."
         />
 
         <SliderInput
@@ -354,7 +389,7 @@ export function InputPanel({ inputs, onUpdate, onReset }: InputPanelProps) {
           onChange={(v) => onUpdate("bugCatchFraction", v)}
           format={pctFormat}
           parse={pctParse}
-          tooltip="Conservative estimate: CodeRabbit typically catches 40–60% of common bug patterns before human review."
+          tooltip="Conservative estimate: CodeRabbit typically catches 40-60% of common bug patterns before human review."
         />
       </div>
     </div>
