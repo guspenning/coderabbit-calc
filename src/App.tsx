@@ -31,8 +31,16 @@ function App() {
           gap: "12px",
         }}>
           <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
-            {/* Logo PNG */}
-            <img src="/coderabbit-logo.png" alt="CodeRabbit" style={{ height: 36 }} />
+            {/* Logo PNG — white pill preserves black wordmark + orange icon on dark bg */}
+            <div style={{
+              background: "#fff",
+              borderRadius: "8px",
+              padding: "6px 14px",
+              display: "inline-flex",
+              alignItems: "center",
+            }}>
+              <img src="/coderabbit-logo.png" alt="CodeRabbit" style={{ height: 26, width: "auto", display: "block" }} />
+            </div>
             <div style={{
               width: "1px",
               height: "24px",
